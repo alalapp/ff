@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1022938852240",
+    "project_id": "imagine-jb7akp",
+    "storage_bucket": "imagine-jb7akp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022938852240:android:46a0bee9a6401f9ccae115",
+        "android_client_info": {
+          "package_name": "com.imagine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_F9zSpNbb5R3DgjfK-kj5LySsy5mCvkU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
