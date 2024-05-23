@@ -195,7 +195,7 @@ class SendCodeRegCall {
   Future<ApiCallResponse> call({
     String? userCode = '1111',
     dynamic userInfoJson,
-    String? userTel = '79122371511',
+    String? userTel = '79122371572',
   }) async {
     final baseUrl = ApiSulGroup.getBaseUrl();
 

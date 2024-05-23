@@ -33,13 +33,13 @@ class OrderDeliveryPageModel extends FlutterFlowModel<OrderDeliveryPageWidget> {
           int index, Function(DeliveryPointsStruct) updateFn) =>
       deliveryPoints[index] = updateFn(deliveryPoints[index]);
 
-  String homeAlias = 'Домашний';
+  String homeAlias = 'Адрес доставки:';
 
   String autoCity = 'Екатеринбург';
 
   int? autoCityID = 250;
 
-  String autoAlias = 'Самовывоз из бутика IMAGINE';
+  String autoAlias = 'Самовывоз из бутика IMAGINE:';
 
   String postAlias = 'В отделение Почты России';
 
@@ -56,6 +56,8 @@ class OrderDeliveryPageModel extends FlutterFlowModel<OrderDeliveryPageWidget> {
   DeliveryMethodsRecord? selFB;
   // Stores action output result for [Backend Call - API (getCalculate)] action in RadioButton widget.
   ApiCallResponse? apiResultsws1;
+  // Stores action output result for [Backend Call - API (getCalculate)] action in RadioButton widget.
+  ApiCallResponse? apiResultsws3;
   // Stores action output result for [Backend Call - API (getCalculate)] action in RadioButton widget.
   ApiCallResponse? apiResultsws2;
 

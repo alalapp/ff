@@ -36,26 +36,26 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
     super.initState();
     _model = createModel(context, () => OrderUserInfoPageModel());
 
-    _model.textController1 ??= TextEditingController(
+    _model.fioFieldTextController ??= TextEditingController(
         text: FFAppState().userProfile.userFIO != ''
             ? FFAppState().userProfile.userFIO
             : (FFAppConstants.nullstr.toString()));
-    _model.textFieldFocusNode1 ??= FocusNode();
+    _model.fioFieldFocusNode ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController(
+    _model.phoneFieldTextController ??= TextEditingController(
         text: FFAppState().userProfile.userTEL != ''
             ? FFAppState().userProfile.userTEL
             : (FFAppConstants.nullstr.toString()));
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.phoneFieldFocusNode ??= FocusNode();
 
     _model.findstrTextTextController ??= TextEditingController();
     _model.findstrTextFocusNode ??= FocusNode();
 
-    _model.textController4 ??= TextEditingController(
+    _model.addressFieldTextController ??= TextEditingController(
         text: FFAppState().userProfile.address != null
             ? FFAppState().userProfile.address.address
             : (FFAppConstants.nullstr.toString()));
-    _model.textFieldFocusNode3 ??= FocusNode();
+    _model.addressFieldFocusNode ??= FocusNode();
 
     animationsMap.addAll({
       'listTileOnPageLoadAnimation': AnimationInfo(
@@ -158,7 +158,8 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     height: 100.0,
@@ -197,8 +198,8 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                 child: SizedBox(
                                   width: 250.0,
                                   child: TextFormField(
-                                    controller: _model.textController1,
-                                    focusNode: _model.textFieldFocusNode1,
+                                    controller: _model.fioFieldTextController,
+                                    focusNode: _model.fioFieldFocusNode,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -226,7 +227,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                                     FlutterFlowTheme.of(context)
                                                         .labelMediumFamily),
                                           ),
-                                      enabledBorder: UnderlineInputBorder(
+                                      enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .alternate,
@@ -235,7 +236,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
+                                      focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
@@ -244,7 +245,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      errorBorder: UnderlineInputBorder(
+                                      errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .error,
@@ -253,7 +254,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      focusedErrorBorder: UnderlineInputBorder(
+                                      focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .error,
@@ -280,7 +281,8 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                                       .bodyMediumFamily),
                                         ),
                                     textAlign: TextAlign.start,
-                                    validator: _model.textController1Validator
+                                    validator: _model
+                                        .fioFieldTextControllerValidator
                                         .asValidator(context),
                                   ),
                                 ),
@@ -332,8 +334,8 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                 child: SizedBox(
                                   width: 250.0,
                                   child: TextFormField(
-                                    controller: _model.textController2,
-                                    focusNode: _model.textFieldFocusNode2,
+                                    controller: _model.phoneFieldTextController,
+                                    focusNode: _model.phoneFieldFocusNode,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -361,7 +363,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                                     FlutterFlowTheme.of(context)
                                                         .labelMediumFamily),
                                           ),
-                                      enabledBorder: UnderlineInputBorder(
+                                      enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .alternate,
@@ -370,7 +372,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
+                                      focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
@@ -379,7 +381,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      errorBorder: UnderlineInputBorder(
+                                      errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .error,
@@ -388,7 +390,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      focusedErrorBorder: UnderlineInputBorder(
+                                      focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .error,
@@ -415,7 +417,8 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                                       .bodyMediumFamily),
                                         ),
                                     textAlign: TextAlign.start,
-                                    validator: _model.textController2Validator
+                                    validator: _model
+                                        .phoneFieldTextControllerValidator
                                         .asValidator(context),
                                   ),
                                 ),
@@ -429,17 +432,19 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                 ),
                 Padding(
                   padding:
-                      const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 20.0),
+                      const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 10.0),
                   child: Container(
                     width: double.infinity,
-                    height: 250.0,
+                    height: 310.0,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Expanded(
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 20.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -473,8 +478,6 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                       .override(
                                         fontFamily: FlutterFlowTheme.of(context)
                                             .headlineMediumFamily,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondary,
                                         fontSize: 15.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.w500,
@@ -536,28 +539,28 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                             FlutterFlowTheme.of(context)
                                                 .labelMediumFamily),
                                   ),
-                              enabledBorder: UnderlineInputBorder(
+                              enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).alternate,
                                   width: 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
-                              focusedBorder: UnderlineInputBorder(
+                              focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).primary,
                                   width: 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
-                              errorBorder: UnderlineInputBorder(
+                              errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).error,
                                   width: 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
-                              focusedErrorBorder: UnderlineInputBorder(
+                              focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).error,
                                   width: 2.0,
@@ -616,7 +619,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                             r'''$.city''',
                                           ).toString();
                                         });
-                                        setState(() {
+                                        FFAppState().update(() {
                                           FFAppState().updateUserProfileStruct(
                                             (e) => e
                                               ..updateAddress(
@@ -624,19 +627,27 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                                   ..cityId =
                                                       _model.selectedcityID
                                                   ..city =
-                                                      _model.selectedcityName,
+                                                      _model.selectedcityName
+                                                  ..cityLat = getJsonField(
+                                                    citiesArrItem,
+                                                    r'''$.city_lat''',
+                                                  )
+                                                  ..cityLon = getJsonField(
+                                                    citiesArrItem,
+                                                    r'''$.city_lon''',
+                                                  ),
                                               ),
                                           );
                                         });
                                         setState(() {
                                           _model.findstrTextTextController
-                                              ?.text = _model.selectedcityName!;
+                                              ?.clear();
                                         });
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                              'Город добавлен. ',
+                                              'Добавлен город ${_model.selectedcityName}',
                                               style: TextStyle(
                                                 color:
                                                     FlutterFlowTheme.of(context)
@@ -663,9 +674,12 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                                 fontFamily:
                                                     FlutterFlowTheme.of(context)
                                                         .titleLargeFamily,
-                                                fontSize: 15.0,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .thirdTextColor,
+                                                fontSize: 16.0,
                                                 letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
+                                                fontWeight: FontWeight.w300,
                                                 useGoogleFonts: GoogleFonts
                                                         .asMap()
                                                     .containsKey(
@@ -688,8 +702,9 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryBackground,
-                                                fontSize: 10.0,
+                                                fontSize: 13.0,
                                                 letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w300,
                                                 useGoogleFonts: GoogleFonts
                                                         .asMap()
                                                     .containsKey(
@@ -723,7 +738,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                       const EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 0.0),
                   child: Container(
                     width: double.infinity,
-                    height: 120.0,
+                    height: 100.0,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
@@ -748,24 +763,6 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                 ),
                           ),
                         ),
-                        Align(
-                          alignment: const AlignmentDirectional(-1.0, 0.0),
-                          child: Text(
-                            'оставьте пустным, если доставка в пункт выдачи',
-                            textAlign: TextAlign.start,
-                            style: FlutterFlowTheme.of(context)
-                                .headlineMedium
-                                .override(
-                                  fontFamily: FlutterFlowTheme.of(context)
-                                      .headlineMediumFamily,
-                                  fontSize: 15.0,
-                                  letterSpacing: 0.0,
-                                  useGoogleFonts: GoogleFonts.asMap()
-                                      .containsKey(FlutterFlowTheme.of(context)
-                                          .headlineMediumFamily),
-                                ),
-                          ),
-                        ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -777,8 +774,9 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                 child: SizedBox(
                                   width: 250.0,
                                   child: TextFormField(
-                                    controller: _model.textController4,
-                                    focusNode: _model.textFieldFocusNode3,
+                                    controller:
+                                        _model.addressFieldTextController,
+                                    focusNode: _model.addressFieldFocusNode,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -806,7 +804,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                                     FlutterFlowTheme.of(context)
                                                         .labelMediumFamily),
                                           ),
-                                      enabledBorder: UnderlineInputBorder(
+                                      enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .alternate,
@@ -815,7 +813,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
+                                      focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
@@ -824,7 +822,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      errorBorder: UnderlineInputBorder(
+                                      errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .error,
@@ -833,7 +831,7 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      focusedErrorBorder: UnderlineInputBorder(
+                                      focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .error,
@@ -857,7 +855,8 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                                       .bodyMediumFamily),
                                         ),
                                     textAlign: TextAlign.start,
-                                    validator: _model.textController4Validator
+                                    validator: _model
+                                        .addressFieldTextControllerValidator
                                         .asValidator(context),
                                   ),
                                 ),
@@ -869,7 +868,6 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                     ),
                   ),
                 ),
-                const Spacer(),
                 Align(
                   alignment: const AlignmentDirectional(0.0, 1.0),
                   child: Stack(
@@ -888,20 +886,44 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                   alignment: const AlignmentDirectional(0.0, 1.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      setState(() {
+                                      FFAppState().update(() {
                                         FFAppState().updateUserProfileStruct(
                                           (e) => e
-                                            ..address = AddressStruct(
-                                              address:
-                                                  _model.textController4.text,
+                                            ..updateAddress(
+                                              (e) => e
+                                                ..address = _model
+                                                    .addressFieldTextController
+                                                    .text
+                                                ..recipientName = _model
+                                                    .fioFieldTextController.text
+                                                ..phone = _model
+                                                    .phoneFieldTextController
+                                                    .text,
                                             ),
                                         );
                                       });
-                                      if ((_model.textController1.text != '') &&
-                                          (_model.textController2.text !=
+                                      if ((FFAppState()
+                                                  .orderData
+                                                  .deliveryCityID !=
+                                              null) &&
+                                          (FFAppState()
+                                                  .orderData
+                                                  .deliveryCityID !=
+                                              0)) {
+                                        FFAppState().update(() {
+                                          FFAppState().updateOrderDataStruct(
+                                            (e) => e..issetAddress = true,
+                                          );
+                                        });
+                                      }
+                                      if ((_model.fioFieldTextController
+                                                      .text !=
+                                                  '') &&
+                                          (_model.phoneFieldTextController
+                                                      .text !=
                                                   '') &&
                                           (_model.selectedcityID != null)) {
-                                        setState(() {
+                                        FFAppState().update(() {
                                           FFAppState().updateOrderDataStruct(
                                             (e) => e
                                               ..issetAddress = true

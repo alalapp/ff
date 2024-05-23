@@ -174,8 +174,6 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                                   _model.selectImage = _model.selFB?.image;
                                 });
                                 if (_model.selectID == 1) {
-                                  context.pushNamed('orderDeliverySetPVZ');
-
                                   _model.apiResultsws1 =
                                       await ApiSulGroup.getCalculateCall.call(
                                     cityCode:
@@ -185,7 +183,10 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                                     kolProducts:
                                         FFAppState().BasketMain.kolProducts,
                                   );
-                                  setState(() {
+
+                                  context.pushNamed('orderDeliverySetPVZ');
+
+                                  FFAppState().update(() {
                                     FFAppState().updateOrderDataStruct(
                                       (e) => e
                                         ..deliveryCost = getJsonField(
@@ -218,6 +219,55 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                                                 ),
                                                 getJsonField(
                                                   (_model.apiResultsws1
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.period_max''',
+                                                ))
+                                            .last,
+                                    );
+                                  });
+                                  _model.apiResultsws3 =
+                                      await ApiSulGroup.getCalculateCall.call(
+                                    cityCode:
+                                        FFAppState().orderData.deliveryCityID,
+                                    tariffId:
+                                        FFAppState().orderData.deliveryTariffID,
+                                    kolProducts:
+                                        FFAppState().BasketMain.kolProducts,
+                                  );
+                                  FFAppState().update(() {
+                                    FFAppState().updateOrderDataStruct(
+                                      (e) => e
+                                        ..deliveryCost = getJsonField(
+                                          (_model.apiResultsws3?.jsonBody ??
+                                              ''),
+                                          r'''$.total_sum''',
+                                        )
+                                        ..deliveryDateMin = functions
+                                            .calculateDateRange(
+                                                getJsonField(
+                                                  (_model.apiResultsws3
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.period_min''',
+                                                ),
+                                                getJsonField(
+                                                  (_model.apiResultsws3
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.period_max''',
+                                                ))
+                                            .first
+                                        ..deliveryDateMax = functions
+                                            .calculateDateRange(
+                                                getJsonField(
+                                                  (_model.apiResultsws3
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.period_min''',
+                                                ),
+                                                getJsonField(
+                                                  (_model.apiResultsws3
                                                           ?.jsonBody ??
                                                       ''),
                                                   r'''$.period_max''',
@@ -259,7 +309,7 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                                     kolProducts:
                                         FFAppState().BasketMain.kolProducts,
                                   );
-                                  setState(() {
+                                  FFAppState().update(() {
                                     FFAppState().updateOrderDataStruct(
                                       (e) => e
                                         ..deliveryCost = getJsonField(
@@ -300,7 +350,7 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                                     );
                                   });
                                 } else if (_model.selectID == 3) {
-                                  setState(() {
+                                  FFAppState().update(() {
                                     FFAppState().updateOrderDataStruct(
                                       (e) => e
                                         ..issetAddress = true
@@ -321,7 +371,7 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                                     );
                                   });
                                 } else {
-                                  setState(() {
+                                  FFAppState().update(() {
                                     FFAppState().updateOrderDataStruct(
                                       (e) => e
                                         ..issetAddress = true
@@ -343,7 +393,7 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                                         ..deliveryName = _model.selectName,
                                     );
                                   });
-                                  setState(() {
+                                  FFAppState().update(() {
                                     FFAppState().updateOrderDataStruct(
                                       (e) => e
                                         ..deliveryCost =
@@ -426,8 +476,9 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                                       fontFamily: FlutterFlowTheme.of(context)
                                           .bodyMediumFamily,
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
+                                          .secondaryText,
                                       letterSpacing: 0.0,
+                                      fontStyle: FontStyle.italic,
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
@@ -447,75 +498,7 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      if (FFAppState().orderData.deliveryName != '')
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              10.0, 0.0, 10.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    FFAppState().orderData.deliveryName,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          letterSpacing: 0.0,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                       if (FFAppState().orderData.deliveryCity != '')
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              10.0, 0.0, 10.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    '${FFAppState().orderData.deliveryCity}, ${FFAppState().orderData.deliveryAddress}',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          letterSpacing: 0.0,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      if (FFAppState().orderData.deliveryAddressAlias != '')
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               10.0, 0.0, 10.0, 0.0),
@@ -549,51 +532,7 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                             ],
                           ),
                         ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            10.0, 0.0, 10.0, 0.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  (FFAppState().orderData.deliveryCost ==
-                                              0) ||
-                                          (FFAppState().BasketMain.total >
-                                              5000)
-                                      ? 'бесплатно'
-                                      : 'стоимость доставки:${FFAppState().orderData.deliveryCost.toString()} ₽',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily:
-                                            FlutterFlowTheme.of(context)
-                                                .bodyMediumFamily,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        letterSpacing: 0.0,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily),
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (dateTimeFormat(
-                                'relative',
-                                FFAppState().orderData.deliveryDateMin,
-                                locale:
-                                    FFLocalizations.of(context).languageCode,
-                              ) !=
-                              '')
+                      if (FFAppState().orderData.deliveryAddressAlias != '')
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               10.0, 0.0, 10.0, 0.0),
@@ -606,17 +545,7 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       10.0, 0.0, 0.0, 0.0),
                                   child: Text(
-                                    'дата доставки с:${dateTimeFormat(
-                                      'yMMMd',
-                                      FFAppState().orderData.deliveryDateMin,
-                                      locale: FFLocalizations.of(context)
-                                          .languageCode,
-                                    )} по: ${dateTimeFormat(
-                                      'MMMEd',
-                                      FFAppState().orderData.deliveryDateMax,
-                                      locale: FFLocalizations.of(context)
-                                          .languageCode,
-                                    )}',
+                                    '${FFAppState().orderData.deliveryCity}, ${FFAppState().orderData.deliveryAddress}',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -637,6 +566,83 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                             ],
                           ),
                         ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            10.0, 0.0, 10.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  (FFAppState().orderData.deliveryCost == 0) ||
+                                          (FFAppState().BasketMain.total > 5000)
+                                      ? 'стоимость доставки: бесплатно'
+                                      : 'стоимость доставки:${FFAppState().orderData.deliveryCost.toString()} ₽',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .bodyMediumFamily,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        letterSpacing: 0.0,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMediumFamily),
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            10.0, 0.0, 10.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  'дата доставки с:${dateTimeFormat(
+                                    'yMMMd',
+                                    FFAppState().orderData.deliveryDateMin,
+                                    locale: FFLocalizations.of(context)
+                                        .languageCode,
+                                  )} по: ${dateTimeFormat(
+                                    'yMMMd',
+                                    FFAppState().orderData.deliveryDateMax,
+                                    locale: FFLocalizations.of(context)
+                                        .languageCode,
+                                  )}',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .bodyMediumFamily,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        letterSpacing: 0.0,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMediumFamily),
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),

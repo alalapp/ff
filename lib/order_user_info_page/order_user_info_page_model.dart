@@ -15,24 +15,24 @@ class OrderUserInfoPageModel extends FlutterFlowModel<OrderUserInfoPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode1;
-  TextEditingController? textController1;
-  String? Function(BuildContext, String?)? textController1Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
+  // State field(s) for fioField widget.
+  FocusNode? fioFieldFocusNode;
+  TextEditingController? fioFieldTextController;
+  String? Function(BuildContext, String?)? fioFieldTextControllerValidator;
+  // State field(s) for phoneField widget.
+  FocusNode? phoneFieldFocusNode;
+  TextEditingController? phoneFieldTextController;
+  String? Function(BuildContext, String?)? phoneFieldTextControllerValidator;
   // State field(s) for findstrText widget.
   FocusNode? findstrTextFocusNode;
   TextEditingController? findstrTextTextController;
   String? Function(BuildContext, String?)? findstrTextTextControllerValidator;
   // Stores action output result for [Backend Call - API (searchCities)] action in findstrText widget.
   ApiCallResponse? apiResultvp5;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode3;
-  TextEditingController? textController4;
-  String? Function(BuildContext, String?)? textController4Validator;
+  // State field(s) for addressField widget.
+  FocusNode? addressFieldFocusNode;
+  TextEditingController? addressFieldTextController;
+  String? Function(BuildContext, String?)? addressFieldTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
@@ -40,16 +40,16 @@ class OrderUserInfoPageModel extends FlutterFlowModel<OrderUserInfoPageWidget> {
   @override
   void dispose() {
     unfocusNode.dispose();
-    textFieldFocusNode1?.dispose();
-    textController1?.dispose();
+    fioFieldFocusNode?.dispose();
+    fioFieldTextController?.dispose();
 
-    textFieldFocusNode2?.dispose();
-    textController2?.dispose();
+    phoneFieldFocusNode?.dispose();
+    phoneFieldTextController?.dispose();
 
     findstrTextFocusNode?.dispose();
     findstrTextTextController?.dispose();
 
-    textFieldFocusNode3?.dispose();
-    textController4?.dispose();
+    addressFieldFocusNode?.dispose();
+    addressFieldTextController?.dispose();
   }
 }

@@ -305,7 +305,8 @@ class _OrderPaymentPageWidgetState extends State<OrderPaymentPageWidget> {
                                               (e) => e
                                                 ..paymentID = _model.selectIndex
                                                 ..paymentName =
-                                                    _model.selectName,
+                                                    _model.selectName
+                                                ..issetPayments = true,
                                             );
                                           });
 

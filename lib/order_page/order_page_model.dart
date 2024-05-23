@@ -1,4 +1,3 @@
-import '/backend/backend.dart';
 import '/components/nav_bar_custom_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'order_page_widget.dart' show OrderPageWidget;
@@ -10,8 +9,6 @@ class OrderPageModel extends FlutterFlowModel<OrderPageWidget> {
   final unfocusNode = FocusNode();
   // Model for NavBarCustom component.
   late NavBarCustomModel navBarCustomModel;
-  // Stores action output result for [Backend Call - Create Document] action in IconButton widget.
-  BasketMainRecord? newBasket111;
 
   @override
   void initState(BuildContext context) {

@@ -137,7 +137,20 @@ class _OrderDeliverySetPVZWidgetState extends State<OrderDeliverySetPVZWidget> {
                             onCameraIdle: (latLng) =>
                                 _model.googleMapsCenter = latLng,
                             initialLocation: _model.googleMapsCenter ??=
-                                const LatLng(56.8519, 60.6122),
+                                FFAppState().userProfile.address.cityLat > 0.0
+                                    ? functions.parseLatLngFromJson(
+                                        FFAppState()
+                                            .userProfile
+                                            .address
+                                            .cityLat
+                                            .toString(),
+                                        FFAppState()
+                                            .userProfile
+                                            .address
+                                            .cityLon
+                                            .toString())!
+                                    : functions.parseLatLngFromJson(
+                                        '56.8519', '60.6122')!,
                             markers: functions
                                 .parseLatLngFromJsonList(
                                     googleMapGetDeliveryPointsResponse.jsonBody)

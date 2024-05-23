@@ -10,7 +10,8 @@ Future initFirebase() async {
             projectId: "imagine-jb7akp",
             storageBucket: "imagine-jb7akp.appspot.com",
             messagingSenderId: "1022938852240",
-            appId: "1:1022938852240:web:25b229c007e019d7cae115"));
+            appId: "1:1022938852240:web:25b229c007e019d7cae115",
+            measurementId: "G-0FHF38EPV7"));
   } else {
     await Firebase.initializeApp();
   }

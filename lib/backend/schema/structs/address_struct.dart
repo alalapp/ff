@@ -24,6 +24,8 @@ class AddressStruct extends FFFirebaseStruct {
     String? pvzCode,
     String? pvzName,
     String? pvzAddress,
+    double? cityLat,
+    double? cityLon,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _cityId = cityId,
         _city = city,
@@ -39,6 +41,8 @@ class AddressStruct extends FFFirebaseStruct {
         _pvzCode = pvzCode,
         _pvzName = pvzName,
         _pvzAddress = pvzAddress,
+        _cityLat = cityLat,
+        _cityLon = cityLon,
         super(firestoreUtilData);
 
   // "city_id" field.
@@ -127,6 +131,20 @@ class AddressStruct extends FFFirebaseStruct {
   set pvzAddress(String? val) => _pvzAddress = val;
   bool hasPvzAddress() => _pvzAddress != null;
 
+  // "city_lat" field.
+  double? _cityLat;
+  double get cityLat => _cityLat ?? 0.0;
+  set cityLat(double? val) => _cityLat = val;
+  void incrementCityLat(double amount) => _cityLat = cityLat + amount;
+  bool hasCityLat() => _cityLat != null;
+
+  // "city_lon" field.
+  double? _cityLon;
+  double get cityLon => _cityLon ?? 0.0;
+  set cityLon(double? val) => _cityLon = val;
+  void incrementCityLon(double amount) => _cityLon = cityLon + amount;
+  bool hasCityLon() => _cityLon != null;
+
   static AddressStruct fromMap(Map<String, dynamic> data) => AddressStruct(
         cityId: castToType<int>(data['city_id']),
         city: data['city'] as String?,
@@ -142,6 +160,8 @@ class AddressStruct extends FFFirebaseStruct {
         pvzCode: data['pvz_code'] as String?,
         pvzName: data['pvz_name'] as String?,
         pvzAddress: data['pvz_address'] as String?,
+        cityLat: castToType<double>(data['city_lat']),
+        cityLon: castToType<double>(data['city_lon']),
       );
 
   static AddressStruct? maybeFromMap(dynamic data) =>
@@ -162,6 +182,8 @@ class AddressStruct extends FFFirebaseStruct {
         'pvz_code': _pvzCode,
         'pvz_name': _pvzName,
         'pvz_address': _pvzAddress,
+        'city_lat': _cityLat,
+        'city_lon': _cityLon,
       }.withoutNulls;
 
   @override
@@ -221,6 +243,14 @@ class AddressStruct extends FFFirebaseStruct {
         'pvz_address': serializeParam(
           _pvzAddress,
           ParamType.String,
+        ),
+        'city_lat': serializeParam(
+          _cityLat,
+          ParamType.double,
+        ),
+        'city_lon': serializeParam(
+          _cityLon,
+          ParamType.double,
         ),
       }.withoutNulls;
 
@@ -296,6 +326,16 @@ class AddressStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        cityLat: deserializeParam(
+          data['city_lat'],
+          ParamType.double,
+          false,
+        ),
+        cityLon: deserializeParam(
+          data['city_lon'],
+          ParamType.double,
+          false,
+        ),
       );
 
   @override
@@ -317,7 +357,9 @@ class AddressStruct extends FFFirebaseStruct {
         recipientName == other.recipientName &&
         pvzCode == other.pvzCode &&
         pvzName == other.pvzName &&
-        pvzAddress == other.pvzAddress;
+        pvzAddress == other.pvzAddress &&
+        cityLat == other.cityLat &&
+        cityLon == other.cityLon;
   }
 
   @override
@@ -335,7 +377,9 @@ class AddressStruct extends FFFirebaseStruct {
         recipientName,
         pvzCode,
         pvzName,
-        pvzAddress
+        pvzAddress,
+        cityLat,
+        cityLon
       ]);
 }
 
@@ -354,6 +398,8 @@ AddressStruct createAddressStruct({
   String? pvzCode,
   String? pvzName,
   String? pvzAddress,
+  double? cityLat,
+  double? cityLon,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -374,6 +420,8 @@ AddressStruct createAddressStruct({
       pvzCode: pvzCode,
       pvzName: pvzName,
       pvzAddress: pvzAddress,
+      cityLat: cityLat,
+      cityLon: cityLon,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,
