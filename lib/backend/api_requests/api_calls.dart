@@ -48,6 +48,7 @@ class ApiSulGroup {
   static GetInfoProductNEWCall getInfoProductNEWCall = GetInfoProductNEWCall();
   static GetDeliveryPointsCall getDeliveryPointsCall = GetDeliveryPointsCall();
   static SearchCitiesCall searchCitiesCall = SearchCitiesCall();
+  static GetCalculateCall getCalculateCall = GetCalculateCall();
 }
 
 class GetCodeCall {
@@ -2150,6 +2151,30 @@ class SearchCitiesCall {
     return ApiManager.instance.makeApiCall(
       callName: 'searchCities',
       apiUrl: '$baseUrl/cdek/searchCities/$findStr',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetCalculateCall {
+  Future<ApiCallResponse> call({
+    int? cityCode,
+    int? tariffId,
+    int? kolProducts,
+  }) async {
+    final baseUrl = ApiSulGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'getCalculate',
+      apiUrl:
+          '$baseUrl/cdek/calculate/$cityCode/$tariffId/$kolProducts',
       callType: ApiCallType.GET,
       headers: {},
       params: {},

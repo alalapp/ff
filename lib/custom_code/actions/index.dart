@@ -8,3 +8,4 @@ export 'refresh_prop_dict.dart' show refreshPropDict;
 export 'filter_data_dict.dart' show filterDataDict;
 export 'filter_dict_start.dart' show filterDictStart;
 export 'update_basket.dart' show updateBasket;
+export 'clear_collection.dart' show clearCollection;

@@ -439,22 +439,53 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Align(
-                          alignment: const AlignmentDirectional(-1.0, 0.0),
-                          child: Text(
-                            'Город доставки',
-                            textAlign: TextAlign.start,
-                            style: FlutterFlowTheme.of(context)
-                                .headlineMedium
-                                .override(
-                                  fontFamily: FlutterFlowTheme.of(context)
-                                      .headlineMediumFamily,
-                                  fontSize: 17.0,
-                                  letterSpacing: 0.0,
-                                  useGoogleFonts: GoogleFonts.asMap()
-                                      .containsKey(FlutterFlowTheme.of(context)
-                                          .headlineMediumFamily),
+                        Expanded(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Align(
+                                alignment: const AlignmentDirectional(-1.0, 0.0),
+                                child: Text(
+                                  'Город доставки',
+                                  textAlign: TextAlign.start,
+                                  style: FlutterFlowTheme.of(context)
+                                      .headlineMedium
+                                      .override(
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .headlineMediumFamily,
+                                        fontSize: 17.0,
+                                        letterSpacing: 0.0,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(
+                                                FlutterFlowTheme.of(context)
+                                                    .headlineMediumFamily),
+                                      ),
                                 ),
+                              ),
+                              Align(
+                                alignment: const AlignmentDirectional(-1.0, 0.0),
+                                child: Text(
+                                  FFAppState().userProfile.address.city,
+                                  textAlign: TextAlign.start,
+                                  style: FlutterFlowTheme.of(context)
+                                      .headlineMedium
+                                      .override(
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .headlineMediumFamily,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        fontSize: 15.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w500,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(
+                                                FlutterFlowTheme.of(context)
+                                                    .headlineMediumFamily),
+                                      ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(
@@ -872,7 +903,16 @@ class _OrderUserInfoPageWidgetState extends State<OrderUserInfoPageWidget>
                                           (_model.selectedcityID != null)) {
                                         setState(() {
                                           FFAppState().updateOrderDataStruct(
-                                            (e) => e..issetAddress = true,
+                                            (e) => e
+                                              ..issetAddress = true
+                                              ..deliveryCity = FFAppState()
+                                                  .userProfile
+                                                  .address
+                                                  .city
+                                              ..deliveryCityID = FFAppState()
+                                                  .userProfile
+                                                  .address
+                                                  .cityId,
                                           );
                                           FFAppState().updateUserProfileStruct(
                                             (e) => e

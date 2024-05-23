@@ -275,6 +275,23 @@ List<PropertyValuesStruct> converttoPropArray(List<dynamic> startArray) {
   return result;
 }
 
+List<LatLng> parseLatLngFromJsonList(List<dynamic> locations) {
+  List<LatLng> markers = [];
+
+  for (var loc in locations) {
+    // Прямое преобразование строк в double
+    var lat = double.parse(loc['location']['latitude'].toString());
+    var lon = double.parse(loc['location']['longitude'].toString());
+
+    // Создаем объект LatLng правильно
+    LatLng pre = LatLng(lat, lon);
+    markers.add(pre);
+  }
+
+  // Возвращаем список объектов LatLng
+  return markers;
+}
+
 List<dynamic> propertyValues2Json(List<PropertyValuesStruct> startvalue) {
   // convert var dd PropertyValues DataType to  json array
   List<dynamic> jsonList = [];
@@ -286,6 +303,52 @@ List<dynamic> propertyValues2Json(List<PropertyValuesStruct> startvalue) {
     jsonList.add(jsonMap);
   }
   return jsonList;
+}
+
+List<DeliveryPointsStruct> parseLatLngFromJsontoDP(List<dynamic> locations) {
+  List<DeliveryPointsStruct> markers = [];
+  FirebaseFirestore db =
+      FirebaseFirestore.instance; // Получаем экземпляр Firestore
+
+  for (var loc in locations) {
+    var lat = loc['location']['latitude'].toString();
+    var lon = loc['location']['longitude'].toString();
+
+    final double latitud = double.parse(lat);
+    final double longitud = double.parse(lon);
+
+    // Создаем объект LatLng правильно
+    LatLng coords = LatLng(latitud, longitud);
+    DeliveryPointsStruct marker = DeliveryPointsStruct(
+        address: loc['location']['address'],
+        addressFull: loc['location']['address_full'],
+        codePvz: loc['code'],
+        name: loc['name'],
+        nearestStation: loc['nearest_station'],
+        city: loc['location']['city'],
+        workTime: loc['work_time'],
+        type: loc['type'],
+        ownerCode: loc['owner_code'],
+        coordinates: coords);
+
+    markers.add(marker);
+    print("Добавлен ПВЗ $marker.name");
+    // Добавление документа в коллекцию Firestore
+    db.collection('deliveryPoints').doc(marker.codePvz).set({
+      'address': marker.address,
+      'address_full': marker.addressFull,
+      'code_pvz': marker.codePvz,
+      'name': marker.name,
+      'nearest_station': marker.nearestStation,
+      'city': marker.city,
+      'work_time': marker.workTime,
+      'type': marker.type,
+      'owner_code': marker.ownerCode,
+      'coordinates': coords,
+    });
+  }
+
+  return markers;
 }
 
 bool containsIString(
@@ -451,4 +514,68 @@ String getMinPriceFromOffers(
   }
 
   return minPrice.toString();
+}
+
+LatLng? parseLatLngFromJson(
+  String? latitud,
+  String? longitud,
+) {
+  var lat = latitud.toString();
+  var lon = longitud.toString();
+  final double latitude = double.parse(lat);
+  final double longitude = double.parse(lon);
+
+  // Возвращаем объект LatLng
+  return LatLng(latitude, longitude);
+}
+
+dynamic getGoogleMapObject(
+  LatLng coordinates,
+  List<dynamic> jsonObjects,
+  double radius,
+) {
+  const double earthRadius = 6371000; // Радиус Земли в метрах
+
+  print(
+      'координаты: широта: $coordinates.latitude долгота: $coordinates.longitude');
+  for (dynamic jsonObject in jsonObjects) {
+    if (jsonObject['location']['latitude'] != null &&
+        jsonObject['location']['longitude'] != null) {
+      final double lat =
+          double.parse(jsonObject['location']['latitude'].toString());
+      final double lon =
+          double.parse(jsonObject['location']['longitude'].toString());
+
+      print(
+          'текущие координаты: широта: $lat.toString() latitude долгота: $lon.toString()');
+      // Прямое вычисление разницы в радианах
+      double dLat = (coordinates.latitude - lat) * (math.pi / 180.0);
+      double dLon = (coordinates.longitude - lon) * (math.pi / 180.0);
+      double a = math.sin(dLat / 2) * math.sin(dLat / 2) +
+          math.cos(lat * (math.pi / 180.0)) *
+              math.cos(coordinates.latitude * (math.pi / 180.0)) *
+              math.sin(dLon / 2) *
+              math.sin(dLon / 2);
+      double c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
+      double distance = earthRadius * c;
+
+      // Проверяем, находится ли расстояние в пределах радиуса
+      if (distance <= radius) {
+        print("Нашли!!!!");
+        return jsonObject;
+      }
+    }
+  }
+  return null;
+}
+
+List<DateTime> calculateDateRange(
+  int minDay,
+  int maxDay,
+) {
+  DateTime now = DateTime.now(); // Текущая дата и время
+  DateTime startDate = now.add(Duration(days: minDay)); // Дата "от"
+  DateTime endDate = now.add(Duration(days: maxDay)); // Дата "до"
+
+  return [startDate, endDate]; // Возвращаем список с двумя датами
 }

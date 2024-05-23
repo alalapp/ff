@@ -46,3 +46,5 @@ export '/order_delivery_page/order_delivery_page_widget.dart'
     show OrderDeliveryPageWidget;
 export '/order_payment_page/order_payment_page_widget.dart'
     show OrderPaymentPageWidget;
+export '/order_delivery_set_p_v_z/order_delivery_set_p_v_z_widget.dart'
+    show OrderDeliverySetPVZWidget;

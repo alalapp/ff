@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_radio_button.dart';
@@ -5,10 +6,12 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'order_delivery_page_model.dart';
 export 'order_delivery_page_model.dart';
 
@@ -42,6 +45,8 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Title(
         title: 'выбор способа доставки',
         color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
@@ -168,6 +173,184 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                                   _model.selectDesc = _model.selFB?.description;
                                   _model.selectImage = _model.selFB?.image;
                                 });
+                                if (_model.selectID == 1) {
+                                  context.pushNamed('orderDeliverySetPVZ');
+
+                                  _model.apiResultsws1 =
+                                      await ApiSulGroup.getCalculateCall.call(
+                                    cityCode:
+                                        FFAppState().orderData.deliveryCityID,
+                                    tariffId:
+                                        FFAppState().orderData.deliveryTariffID,
+                                    kolProducts:
+                                        FFAppState().BasketMain.kolProducts,
+                                  );
+                                  setState(() {
+                                    FFAppState().updateOrderDataStruct(
+                                      (e) => e
+                                        ..deliveryCost = getJsonField(
+                                          (_model.apiResultsws1?.jsonBody ??
+                                              ''),
+                                          r'''$.total_sum''',
+                                        )
+                                        ..deliveryDateMin = functions
+                                            .calculateDateRange(
+                                                getJsonField(
+                                                  (_model.apiResultsws1
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.period_min''',
+                                                ),
+                                                getJsonField(
+                                                  (_model.apiResultsws1
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.period_max''',
+                                                ))
+                                            .first
+                                        ..deliveryDateMax = functions
+                                            .calculateDateRange(
+                                                getJsonField(
+                                                  (_model.apiResultsws1
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.period_min''',
+                                                ),
+                                                getJsonField(
+                                                  (_model.apiResultsws1
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.period_max''',
+                                                ))
+                                            .last,
+                                    );
+                                  });
+                                } else if (_model.selectID == 2) {
+                                  FFAppState().update(() {
+                                    FFAppState().updateOrderDataStruct(
+                                      (e) => e
+                                        ..issetAddress = true
+                                        ..deliveryCity = FFAppState()
+                                            .userProfile
+                                            .address
+                                            .city
+                                        ..deliveryCityID = FFAppState()
+                                            .userProfile
+                                            .address
+                                            .cityId
+                                        ..deliveryAddress = FFAppState()
+                                            .userProfile
+                                            .address
+                                            .address
+                                        ..deliveryAddressAlias =
+                                            _model.homeAlias
+                                        ..deliveryID = _model.selectID
+                                        ..deliveryName = _model.selectName
+                                        ..deliveryTariffID =
+                                            _model.tariffIDCourier,
+                                    );
+                                  });
+                                  _model.apiResultsws2 =
+                                      await ApiSulGroup.getCalculateCall.call(
+                                    cityCode:
+                                        FFAppState().orderData.deliveryCityID,
+                                    tariffId:
+                                        FFAppState().orderData.deliveryTariffID,
+                                    kolProducts:
+                                        FFAppState().BasketMain.kolProducts,
+                                  );
+                                  setState(() {
+                                    FFAppState().updateOrderDataStruct(
+                                      (e) => e
+                                        ..deliveryCost = getJsonField(
+                                          (_model.apiResultsws2?.jsonBody ??
+                                              ''),
+                                          r'''$.total_sum''',
+                                        )
+                                        ..deliveryDateMin = functions
+                                            .calculateDateRange(
+                                                getJsonField(
+                                                  (_model.apiResultsws2
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.period_min''',
+                                                ),
+                                                getJsonField(
+                                                  (_model.apiResultsws2
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.period_max''',
+                                                ))
+                                            .first
+                                        ..deliveryDateMax = functions
+                                            .calculateDateRange(
+                                                getJsonField(
+                                                  (_model.apiResultsws2
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.period_min''',
+                                                ),
+                                                getJsonField(
+                                                  (_model.apiResultsws2
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.period_max''',
+                                                ))
+                                            .last,
+                                    );
+                                  });
+                                } else if (_model.selectID == 3) {
+                                  setState(() {
+                                    FFAppState().updateOrderDataStruct(
+                                      (e) => e
+                                        ..issetAddress = true
+                                        ..deliveryCity = _model.autoCity
+                                        ..deliveryCityID = _model.autoCityID
+                                        ..deliveryAddress = _model.autoAddress
+                                        ..deliveryAddressAlias =
+                                            _model.autoAlias
+                                        ..deliveryID = _model.selectID
+                                        ..deliveryName = _model.selectName
+                                        ..deliveryCost = FFAppConstants.zerocode
+                                        ..deliveryDateMin = functions
+                                            .calculateDateRange(0, 0)
+                                            .first
+                                        ..deliveryDateMax = functions
+                                            .calculateDateRange(0, 0)
+                                            .last,
+                                    );
+                                  });
+                                } else {
+                                  setState(() {
+                                    FFAppState().updateOrderDataStruct(
+                                      (e) => e
+                                        ..issetAddress = true
+                                        ..deliveryCity = FFAppState()
+                                            .userProfile
+                                            .address
+                                            .city
+                                        ..deliveryCityID = FFAppState()
+                                            .userProfile
+                                            .address
+                                            .cityId
+                                        ..deliveryAddress = FFAppState()
+                                            .userProfile
+                                            .address
+                                            .address
+                                        ..deliveryAddressAlias =
+                                            _model.homeAlias
+                                        ..deliveryID = _model.selectID
+                                        ..deliveryName = _model.selectName,
+                                    );
+                                  });
+                                  setState(() {
+                                    FFAppState().updateOrderDataStruct(
+                                      (e) => e
+                                        ..deliveryCost =
+                                            FFAppConstants.zerocode,
+                                    );
+                                  });
+                                }
 
                                 setState(() {});
                               },
@@ -213,14 +396,160 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
-                  child: Container(
-                    height: 150.0,
-                    decoration: const BoxDecoration(),
-                    child: Visibility(
-                      visible: _model.selectID != null,
-                      child: Padding(
+                Container(
+                  height: 100.0,
+                  decoration: const BoxDecoration(),
+                  child: Visibility(
+                    visible: _model.selectID != null,
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                valueOrDefault<String>(
+                                  _model.selectDesc != null &&
+                                          _model.selectDesc != ''
+                                      ? _model.selectDesc
+                                      : '-',
+                                  '-',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      letterSpacing: 0.0,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily),
+                                    ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 100.0,
+                  decoration: const BoxDecoration(),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      if (FFAppState().orderData.deliveryName != '')
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              10.0, 0.0, 10.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    FFAppState().orderData.deliveryName,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          letterSpacing: 0.0,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily),
+                                        ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      if (FFAppState().orderData.deliveryCity != '')
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              10.0, 0.0, 10.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    '${FFAppState().orderData.deliveryCity}, ${FFAppState().orderData.deliveryAddress}',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          letterSpacing: 0.0,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily),
+                                        ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      if (FFAppState().orderData.deliveryAddressAlias != '')
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              10.0, 0.0, 10.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    FFAppState().orderData.deliveryAddressAlias,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          letterSpacing: 0.0,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily),
+                                        ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             10.0, 0.0, 10.0, 0.0),
                         child: Row(
@@ -232,18 +561,18 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     10.0, 0.0, 0.0, 0.0),
                                 child: Text(
-                                  valueOrDefault<String>(
-                                    _model.selectDesc != null &&
-                                            _model.selectDesc != ''
-                                        ? _model.selectDesc
-                                        : '-',
-                                    '-',
-                                  ),
+                                  (FFAppState().orderData.deliveryCost ==
+                                              0) ||
+                                          (FFAppState().BasketMain.total >
+                                              5000)
+                                      ? 'бесплатно'
+                                      : 'стоимость доставки:${FFAppState().orderData.deliveryCost.toString()} ₽',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
-                                        fontFamily: FlutterFlowTheme.of(context)
-                                            .bodyMediumFamily,
+                                        fontFamily:
+                                            FlutterFlowTheme.of(context)
+                                                .bodyMediumFamily,
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
                                         letterSpacing: 0.0,
@@ -255,28 +584,60 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.network(
-                                  valueOrDefault<String>(
-                                    _model.selectID != null
-                                        ? _model.selectImage
-                                        : '-',
-                                    '-',
-                                  ),
-                                  width: 120.0,
-                                  height: 60.0,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
-                    ),
+                      if (dateTimeFormat(
+                                'relative',
+                                FFAppState().orderData.deliveryDateMin,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              ) !=
+                              '')
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              10.0, 0.0, 10.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'дата доставки с:${dateTimeFormat(
+                                      'yMMMd',
+                                      FFAppState().orderData.deliveryDateMin,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    )} по: ${dateTimeFormat(
+                                      'MMMEd',
+                                      FFAppState().orderData.deliveryDateMax,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    )}',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          letterSpacing: 0.0,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily),
+                                        ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
                   ),
                 ),
                 const Spacer(),
@@ -306,7 +667,8 @@ class _OrderDeliveryPageWidgetState extends State<OrderDeliveryPageWidget> {
                                               (e) => e
                                                 ..deliveryID = _model.selectID
                                                 ..deliveryName =
-                                                    _model.selectName,
+                                                    _model.selectName
+                                                ..issetDelivery = true,
                                             );
                                           });
 

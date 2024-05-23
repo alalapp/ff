@@ -4,6 +4,7 @@ export 'address_struct.dart';
 export 'basket_struct.dart';
 export 'basket_main_struct.dart';
 export 'child_category_struct.dart';
+export 'delivery_points_struct.dart';
 export 'filter_type_struct.dart';
 export 'hearts_array_struct.dart';
 export 'product_info_struct.dart';

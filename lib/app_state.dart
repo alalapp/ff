@@ -44,6 +44,38 @@ class FFAppState extends ChangeNotifier {
         }
       }
     });
+    _safeInit(() {
+      _deliveryStatuses = prefs
+              .getStringList('ff_deliveryStatuses')
+              ?.map((x) {
+                try {
+                  return DeliveryStatusesStruct.fromSerializableMap(
+                      jsonDecode(x));
+                } catch (e) {
+                  print("Can't decode persisted data type. Error: $e.");
+                  return null;
+                }
+              })
+              .withoutNulls
+              .toList() ??
+          _deliveryStatuses;
+    });
+    _safeInit(() {
+      _paymentStatuses = prefs
+              .getStringList('ff_paymentStatuses')
+              ?.map((x) {
+                try {
+                  return PaymentStatusesStruct.fromSerializableMap(
+                      jsonDecode(x));
+                } catch (e) {
+                  print("Can't decode persisted data type. Error: $e.");
+                  return null;
+                }
+              })
+              .withoutNulls
+              .toList() ??
+          _paymentStatuses;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -1242,6 +1274,152 @@ class FFAppState extends ChangeNotifier {
   String get selectedDelivery => _selectedDelivery;
   set selectedDelivery(String value) {
     _selectedDelivery = value;
+  }
+
+  List<DeliveryStatusesStruct> _deliveryStatuses = [
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"1\",\"deliveryVarID\":\"1\",\"status\":\"Формируется к отправке\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"1\",\"deliveryVarID\":\"2\",\"status\":\"В пути\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"1\",\"deliveryVarID\":\"3\",\"status\":\"Доставлен в ПВЗ\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"1\",\"deliveryVarID\":\"4\",\"status\":\"Вручен\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"1\",\"deliveryVarID\":\"5\",\"status\":\"Не вручен\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"2\",\"deliveryVarID\":\"1\",\"status\":\"Формируется к отправке\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"2\",\"deliveryVarID\":\"2\",\"status\":\"В пути\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"2\",\"deliveryVarID\":\"3\",\"status\":\"Выдан курьеру на доставку\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"2\",\"deliveryVarID\":\"4\",\"status\":\"Вручен\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"2\",\"deliveryVarID\":\"5\",\"status\":\"Не вручен\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"3\",\"deliveryVarID\":\"1\",\"status\":\"Формируется к выдаче\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"3\",\"deliveryVarID\":\"2\",\"status\":\"Вручен\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"3\",\"deliveryVarID\":\"3\",\"status\":\"Не вручен\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"4\",\"deliveryVarID\":\"0\",\"status\":\"Формируется к отправке\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"4\",\"deliveryVarID\":\"1\",\"status\":\"В пути\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"4\",\"deliveryVarID\":\"3\",\"status\":\"Прибыл в отделение связи\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"4\",\"deliveryVarID\":\"4\",\"status\":\"Вручен\"}')),
+    DeliveryStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"4\",\"deliveryVarID\":\"5\",\"status\":\"Не вручен\"}'))
+  ];
+  List<DeliveryStatusesStruct> get deliveryStatuses => _deliveryStatuses;
+  set deliveryStatuses(List<DeliveryStatusesStruct> value) {
+    _deliveryStatuses = value;
+    prefs.setStringList(
+        'ff_deliveryStatuses', value.map((x) => x.serialize()).toList());
+  }
+
+  void addToDeliveryStatuses(DeliveryStatusesStruct value) {
+    _deliveryStatuses.add(value);
+    prefs.setStringList('ff_deliveryStatuses',
+        _deliveryStatuses.map((x) => x.serialize()).toList());
+  }
+
+  void removeFromDeliveryStatuses(DeliveryStatusesStruct value) {
+    _deliveryStatuses.remove(value);
+    prefs.setStringList('ff_deliveryStatuses',
+        _deliveryStatuses.map((x) => x.serialize()).toList());
+  }
+
+  void removeAtIndexFromDeliveryStatuses(int index) {
+    _deliveryStatuses.removeAt(index);
+    prefs.setStringList('ff_deliveryStatuses',
+        _deliveryStatuses.map((x) => x.serialize()).toList());
+  }
+
+  void updateDeliveryStatusesAtIndex(
+    int index,
+    DeliveryStatusesStruct Function(DeliveryStatusesStruct) updateFn,
+  ) {
+    _deliveryStatuses[index] = updateFn(_deliveryStatuses[index]);
+    prefs.setStringList('ff_deliveryStatuses',
+        _deliveryStatuses.map((x) => x.serialize()).toList());
+  }
+
+  void insertAtIndexInDeliveryStatuses(
+      int index, DeliveryStatusesStruct value) {
+    _deliveryStatuses.insert(index, value);
+    prefs.setStringList('ff_deliveryStatuses',
+        _deliveryStatuses.map((x) => x.serialize()).toList());
+  }
+
+  List<PaymentStatusesStruct> _paymentStatuses = [
+    PaymentStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"1\",\"paymentVarID\":\"1\",\"paymentStatus\":\"Ожидается оплата\"}')),
+    PaymentStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"1\",\"paymentVarID\":\"2\",\"paymentStatus\":\"Ожидается оплата\"}')),
+    PaymentStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"1\",\"paymentVarID\":\"3\",\"paymentStatus\":\"Ожидается оплата\"}')),
+    PaymentStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"1\",\"paymentVarID\":\"4\",\"paymentStatus\":\"Ожидается оплата\"}')),
+    PaymentStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"2\",\"paymentVarID\":\"1\",\"paymentStatus\":\"Оплачен\"}')),
+    PaymentStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"2\",\"paymentVarID\":\"2\",\"paymentStatus\":\"Оплачен\"}')),
+    PaymentStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"2\",\"paymentVarID\":\"3\",\"paymentStatus\":\"Оплачен\"}')),
+    PaymentStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"2\",\"paymentVarID\":\"4\",\"paymentStatus\":\"Оплачен\"}')),
+    PaymentStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"3\",\"paymentVarID\":\"1\",\"paymentStatus\":\"Не оплачен\"}')),
+    PaymentStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"3\",\"paymentVarID\":\"2\",\"paymentStatus\":\"Не оплачен\"}')),
+    PaymentStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"3\",\"paymentVarID\":\"3\",\"paymentStatus\":\"Не оплачен\"}')),
+    PaymentStatusesStruct.fromSerializableMap(jsonDecode(
+        '{\"statusID\":\"3\",\"paymentVarID\":\"4\",\"paymentStatus\":\"Не оплачен\"}'))
+  ];
+  List<PaymentStatusesStruct> get paymentStatuses => _paymentStatuses;
+  set paymentStatuses(List<PaymentStatusesStruct> value) {
+    _paymentStatuses = value;
+    prefs.setStringList(
+        'ff_paymentStatuses', value.map((x) => x.serialize()).toList());
+  }
+
+  void addToPaymentStatuses(PaymentStatusesStruct value) {
+    _paymentStatuses.add(value);
+    prefs.setStringList('ff_paymentStatuses',
+        _paymentStatuses.map((x) => x.serialize()).toList());
+  }
+
+  void removeFromPaymentStatuses(PaymentStatusesStruct value) {
+    _paymentStatuses.remove(value);
+    prefs.setStringList('ff_paymentStatuses',
+        _paymentStatuses.map((x) => x.serialize()).toList());
+  }
+
+  void removeAtIndexFromPaymentStatuses(int index) {
+    _paymentStatuses.removeAt(index);
+    prefs.setStringList('ff_paymentStatuses',
+        _paymentStatuses.map((x) => x.serialize()).toList());
+  }
+
+  void updatePaymentStatusesAtIndex(
+    int index,
+    PaymentStatusesStruct Function(PaymentStatusesStruct) updateFn,
+  ) {
+    _paymentStatuses[index] = updateFn(_paymentStatuses[index]);
+    prefs.setStringList('ff_paymentStatuses',
+        _paymentStatuses.map((x) => x.serialize()).toList());
+  }
+
+  void insertAtIndexInPaymentStatuses(
+      int index, PaymentStatusesStruct value) {
+    _paymentStatuses.insert(index, value);
+    prefs.setStringList('ff_paymentStatuses',
+        _paymentStatuses.map((x) => x.serialize()).toList());
   }
 
   final _getActionsQueryManager = FutureRequestManager<ApiCallResponse>();

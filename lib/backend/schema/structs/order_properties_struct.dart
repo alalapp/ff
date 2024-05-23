@@ -34,6 +34,12 @@ class OrderPropertiesStruct extends FFFirebaseStruct {
     bool? issetAddress,
     bool? issetDelivery,
     bool? issetPayments,
+    String? deliveryCity,
+    int? deliveryCityID,
+    String? deliveryAddress,
+    String? deliveryAddressAlias,
+    DateTime? deliveryDateMin,
+    DateTime? deliveryDateMax,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _paymentID = paymentID,
         _paymentName = paymentName,
@@ -60,6 +66,12 @@ class OrderPropertiesStruct extends FFFirebaseStruct {
         _issetAddress = issetAddress,
         _issetDelivery = issetDelivery,
         _issetPayments = issetPayments,
+        _deliveryCity = deliveryCity,
+        _deliveryCityID = deliveryCityID,
+        _deliveryAddress = deliveryAddress,
+        _deliveryAddressAlias = deliveryAddressAlias,
+        _deliveryDateMin = deliveryDateMin,
+        _deliveryDateMax = deliveryDateMax,
         super(firestoreUtilData);
 
   // "paymentID" field.
@@ -241,6 +253,44 @@ class OrderPropertiesStruct extends FFFirebaseStruct {
   set issetPayments(bool? val) => _issetPayments = val;
   bool hasIssetPayments() => _issetPayments != null;
 
+  // "deliveryCity" field.
+  String? _deliveryCity;
+  String get deliveryCity => _deliveryCity ?? '';
+  set deliveryCity(String? val) => _deliveryCity = val;
+  bool hasDeliveryCity() => _deliveryCity != null;
+
+  // "deliveryCityID" field.
+  int? _deliveryCityID;
+  int get deliveryCityID => _deliveryCityID ?? 0;
+  set deliveryCityID(int? val) => _deliveryCityID = val;
+  void incrementDeliveryCityID(int amount) =>
+      _deliveryCityID = deliveryCityID + amount;
+  bool hasDeliveryCityID() => _deliveryCityID != null;
+
+  // "deliveryAddress" field.
+  String? _deliveryAddress;
+  String get deliveryAddress => _deliveryAddress ?? '';
+  set deliveryAddress(String? val) => _deliveryAddress = val;
+  bool hasDeliveryAddress() => _deliveryAddress != null;
+
+  // "deliveryAddressAlias" field.
+  String? _deliveryAddressAlias;
+  String get deliveryAddressAlias => _deliveryAddressAlias ?? '';
+  set deliveryAddressAlias(String? val) => _deliveryAddressAlias = val;
+  bool hasDeliveryAddressAlias() => _deliveryAddressAlias != null;
+
+  // "deliveryDateMin" field.
+  DateTime? _deliveryDateMin;
+  DateTime? get deliveryDateMin => _deliveryDateMin;
+  set deliveryDateMin(DateTime? val) => _deliveryDateMin = val;
+  bool hasDeliveryDateMin() => _deliveryDateMin != null;
+
+  // "deliveryDateMax" field.
+  DateTime? _deliveryDateMax;
+  DateTime? get deliveryDateMax => _deliveryDateMax;
+  set deliveryDateMax(DateTime? val) => _deliveryDateMax = val;
+  bool hasDeliveryDateMax() => _deliveryDateMax != null;
+
   static OrderPropertiesStruct fromMap(Map<String, dynamic> data) =>
       OrderPropertiesStruct(
         paymentID: castToType<int>(data['paymentID']),
@@ -273,6 +323,12 @@ class OrderPropertiesStruct extends FFFirebaseStruct {
         issetAddress: data['issetAddress'] as bool?,
         issetDelivery: data['issetDelivery'] as bool?,
         issetPayments: data['issetPayments'] as bool?,
+        deliveryCity: data['deliveryCity'] as String?,
+        deliveryCityID: castToType<int>(data['deliveryCityID']),
+        deliveryAddress: data['deliveryAddress'] as String?,
+        deliveryAddressAlias: data['deliveryAddressAlias'] as String?,
+        deliveryDateMin: data['deliveryDateMin'] as DateTime?,
+        deliveryDateMax: data['deliveryDateMax'] as DateTime?,
       );
 
   static OrderPropertiesStruct? maybeFromMap(dynamic data) => data is Map
@@ -305,6 +361,12 @@ class OrderPropertiesStruct extends FFFirebaseStruct {
         'issetAddress': _issetAddress,
         'issetDelivery': _issetDelivery,
         'issetPayments': _issetPayments,
+        'deliveryCity': _deliveryCity,
+        'deliveryCityID': _deliveryCityID,
+        'deliveryAddress': _deliveryAddress,
+        'deliveryAddressAlias': _deliveryAddressAlias,
+        'deliveryDateMin': _deliveryDateMin,
+        'deliveryDateMax': _deliveryDateMax,
       }.withoutNulls;
 
   @override
@@ -409,6 +471,30 @@ class OrderPropertiesStruct extends FFFirebaseStruct {
         'issetPayments': serializeParam(
           _issetPayments,
           ParamType.bool,
+        ),
+        'deliveryCity': serializeParam(
+          _deliveryCity,
+          ParamType.String,
+        ),
+        'deliveryCityID': serializeParam(
+          _deliveryCityID,
+          ParamType.int,
+        ),
+        'deliveryAddress': serializeParam(
+          _deliveryAddress,
+          ParamType.String,
+        ),
+        'deliveryAddressAlias': serializeParam(
+          _deliveryAddressAlias,
+          ParamType.String,
+        ),
+        'deliveryDateMin': serializeParam(
+          _deliveryDateMin,
+          ParamType.DateTime,
+        ),
+        'deliveryDateMax': serializeParam(
+          _deliveryDateMax,
+          ParamType.DateTime,
         ),
       }.withoutNulls;
 
@@ -543,6 +629,36 @@ class OrderPropertiesStruct extends FFFirebaseStruct {
           ParamType.bool,
           false,
         ),
+        deliveryCity: deserializeParam(
+          data['deliveryCity'],
+          ParamType.String,
+          false,
+        ),
+        deliveryCityID: deserializeParam(
+          data['deliveryCityID'],
+          ParamType.int,
+          false,
+        ),
+        deliveryAddress: deserializeParam(
+          data['deliveryAddress'],
+          ParamType.String,
+          false,
+        ),
+        deliveryAddressAlias: deserializeParam(
+          data['deliveryAddressAlias'],
+          ParamType.String,
+          false,
+        ),
+        deliveryDateMin: deserializeParam(
+          data['deliveryDateMin'],
+          ParamType.DateTime,
+          false,
+        ),
+        deliveryDateMax: deserializeParam(
+          data['deliveryDateMax'],
+          ParamType.DateTime,
+          false,
+        ),
       );
 
   @override
@@ -576,7 +692,13 @@ class OrderPropertiesStruct extends FFFirebaseStruct {
         paymentStatus == other.paymentStatus &&
         issetAddress == other.issetAddress &&
         issetDelivery == other.issetDelivery &&
-        issetPayments == other.issetPayments;
+        issetPayments == other.issetPayments &&
+        deliveryCity == other.deliveryCity &&
+        deliveryCityID == other.deliveryCityID &&
+        deliveryAddress == other.deliveryAddress &&
+        deliveryAddressAlias == other.deliveryAddressAlias &&
+        deliveryDateMin == other.deliveryDateMin &&
+        deliveryDateMax == other.deliveryDateMax;
   }
 
   @override
@@ -605,7 +727,13 @@ class OrderPropertiesStruct extends FFFirebaseStruct {
         paymentStatus,
         issetAddress,
         issetDelivery,
-        issetPayments
+        issetPayments,
+        deliveryCity,
+        deliveryCityID,
+        deliveryAddress,
+        deliveryAddressAlias,
+        deliveryDateMin,
+        deliveryDateMax
       ]);
 }
 
@@ -634,6 +762,12 @@ OrderPropertiesStruct createOrderPropertiesStruct({
   bool? issetAddress,
   bool? issetDelivery,
   bool? issetPayments,
+  String? deliveryCity,
+  int? deliveryCityID,
+  String? deliveryAddress,
+  String? deliveryAddressAlias,
+  DateTime? deliveryDateMin,
+  DateTime? deliveryDateMax,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -666,6 +800,12 @@ OrderPropertiesStruct createOrderPropertiesStruct({
       issetAddress: issetAddress,
       issetDelivery: issetDelivery,
       issetPayments: issetPayments,
+      deliveryCity: deliveryCity,
+      deliveryCityID: deliveryCityID,
+      deliveryAddress: deliveryAddress,
+      deliveryAddressAlias: deliveryAddressAlias,
+      deliveryDateMin: deliveryDateMin,
+      deliveryDateMax: deliveryDateMax,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

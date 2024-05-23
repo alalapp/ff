@@ -11,6 +11,7 @@ import 'schema/basket_record.dart';
 import 'schema/orders_record.dart';
 import 'schema/delivery_methods_record.dart';
 import 'schema/payment_methods_record.dart';
+import 'schema/delivery_points_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -25,6 +26,7 @@ export 'schema/basket_record.dart';
 export 'schema/orders_record.dart';
 export 'schema/delivery_methods_record.dart';
 export 'schema/payment_methods_record.dart';
+export 'schema/delivery_points_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -246,6 +248,43 @@ Future<List<PaymentMethodsRecord>> queryPaymentMethodsRecordOnce({
     queryCollectionOnce(
       PaymentMethodsRecord.collection,
       PaymentMethodsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query DeliveryPointsRecords (as a Stream and as a Future).
+Future<int> queryDeliveryPointsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      DeliveryPointsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<DeliveryPointsRecord>> queryDeliveryPointsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      DeliveryPointsRecord.collection,
+      DeliveryPointsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<DeliveryPointsRecord>> queryDeliveryPointsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      DeliveryPointsRecord.collection,
+      DeliveryPointsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

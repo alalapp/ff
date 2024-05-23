@@ -427,6 +427,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/orderPaymentPage',
           requireAuth: true,
           builder: (context, params) => const OrderPaymentPageWidget(),
+        ),
+        FFRoute(
+          name: 'orderDeliverySetPVZ',
+          path: '/orderDeliverySetPVZ',
+          builder: (context, params) => const OrderDeliverySetPVZWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

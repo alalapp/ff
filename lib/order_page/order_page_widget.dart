@@ -724,7 +724,7 @@ class _OrderPageWidgetState extends State<OrderPageWidget>
                                                     if (rowBasketRecord.kolvo >
                                                         1)
                                                       Text(
-                                                        'X${rowBasketRecord.kolvo.toString()}',
+                                                        'x${rowBasketRecord.kolvo.toString()}',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
